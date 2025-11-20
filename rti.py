@@ -37,7 +37,7 @@ FIXED_MALAYALAM_FOOTER_INFO = """
 
 # --- 2. PAGE CONFIGURATION & THEME ---
 st.set_page_config(
-    page_title="RTI Automation Unit", 
+    page_title="RTI Automation", 
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -77,7 +77,7 @@ h2, h3 {
     border-left: 5px solid #ff9900;
 }
 /* DISCLAIMER: Fixed Red Box in Corner */
-.fixed-disclaimer {
+/*.fixed-disclaimer {
     position: fixed;
     bottom: 0px;
     right: 0px;
@@ -95,12 +95,12 @@ h2, h3 {
     0% { transform: scale(1); }
     50% { transform: scale(1.02); }
     100% { transform: scale(1); }
-}
+}*/
 </style>
 """
-st.markdown(custom_css, unsafe_allow_html=True)
+#st.markdown(custom_css, unsafe_allow_html=True)
 # --- ADDED: RENDER THE DISCLAIMER HTML ---
-st.markdown('<div class="fixed-disclaimer">Verify before submission</div>', unsafe_allow_html=True)
+#st.markdown('<div class="fixed-disclaimer">Verify before submission</div>', unsafe_allow_html=True)
 # ------------------------------------------
 
 # --- 3. GEMINI API SETUP (Mock/Client) ---
@@ -201,10 +201,10 @@ def translate_name_clean(name):
 
 # --- 5. GENERATION FUNCTIONS ---
 def generate_internal_note(malayalam_name):
-    subject = f"വിഷയം:- ഗതാഗത വകുപ്പ് - വിവരാവകാശ നിയമം, 2005 പ്രകാരം വിവരങ്ങള്‍ ലഭ്യമാക്കണമെന്ന് ആവശ്യപ്പെട്ടുകൊണ്ട് **ശ്രീ. {malayalam_name}** സമർപ്പിച്ച അപേക്ഷ - സംബന്ധിച്ച്."
-    body = f"""വിവരാവകാശ നിയമം, 2005 പ്രകാരം **ശ്രീ. {malayalam_name}** സമർപ്പിച്ച അപേക്ഷ നടപ്പു ഫയല്‍ 1-3 -ൽ  കണ്ടാലും. വിവരാവകാശ അപേക്ഷയിൽ ആവശ്യപ്പെട്ട വിശദാംശങ്ങള്‍ ഈ വകുപ്പിലെ SPIO-യുടെ കൈവശമുള്ളവയല്ലാത്തതിനാൽ, വിവരാവകാശ നിയമം ചട്ടം 6(3) പ്രകാരം സമയപരിധിക്കുള്ളിൽ അപേക്ഷകന് മറുപടി നൽകുന്നതിനായി അപേക്ഷ കെ.എസ്.ആര്‍.റ്റി.സി.യിലെ SPIO-യ്ക്ക് കൈമാറി അക്കാര്യം അപേക്ഷകനെ അറിയിക്കാവുന്നതാണ്.
+    subject = f"വിഷയം:- ഗതാഗത വകുപ്പ് - വിവരാവകാശ നിയമം, 2005 പ്രകാരം വിവരങ്ങള്‍ ലഭ്യമാക്കണമെന്ന് ആവശ്യപ്പെട്ടുകൊണ്ട് ശ്രീ. {malayalam_name} സമർപ്പിച്ച അപേക്ഷ - സംബന്ധിച്ച്."
+    body = f"""വിവരാവകാശ നിയമം, 2005 പ്രകാരം ശ്രീ. {malayalam_name} സമർപ്പിച്ച അപേക്ഷ നടപ്പു ഫയല്‍ 1-3 -ൽ  കണ്ടാലും. വിവരാവകാശ അപേക്ഷയിൽ ആവശ്യപ്പെട്ട വിശദാംശങ്ങള്‍ ഈ വകുപ്പിലെ SPIO-യുടെ കൈവശമുള്ളവയല്ലാത്തതിനാൽ, വിവരാവകാശ നിയമം ചട്ടം 6(3) പ്രകാരം സമയപരിധിക്കുള്ളിൽ അപേക്ഷകന് മറുപടി നൽകുന്നതിനായി അപേക്ഷ കെ.എസ്.ആര്‍.റ്റി.സി.യിലെ SPIO-യ്ക്ക് കൈമാറി അക്കാര്യം അപേക്ഷകനെ അറിയിക്കാവുന്നതാണ്.
 ഉത്തരവിന് വിധേയമായി കരട് കത്ത് അംഗീകാരത്തിനായി സമർപ്പിക്കുന്നു."""
-    return f"#### **കരട് കുറിപ്പ് (Internal Note)**\n\n{subject}\n\n{body}"
+    return f"കരട് കുറിപ്പ്\n\n{subject}\n\n{body}"
 
 def generate_reply_letter(orig_name, orig_address, rti_date, rti_num, lang):
     receiver_name = orig_name.strip()
@@ -213,29 +213,29 @@ def generate_reply_letter(orig_name, orig_address, rti_date, rti_num, lang):
     receiver_content = f"{receiver_name}\n{receiver_addr}"
     sender_designation = "സ്റ്റേറ്റ് പബ്ലിക് ഇൻഫർമേഷൻ ഓഫീസർ & അണ്ടർ സെക്രട്ടറി"
     rti_subject = "ഗതാഗത വകുപ്പ് - വിവരാവകാശ നിയമം 2005 പ്രകാരം സമർപ്പിച്ച അപേക്ഷ മറുപടി - സംബന്ധിച്ച്."
-    reference_line = f"താങ്കരുടെ {rti_date}-ലെ {rti_num} നമ്പർ വിവരാവകാശ അപേക്ഷ."
+    reference_line = f"താങ്കളുടെ {rti_date}-ലെ {rti_num} നമ്പർ വിവരാവകാശ അപേക്ഷ."
     signatory = "[ഒപ്പിടുന്ന ഉദ്യോഗസ്ഥൻ്റെ പേരും സ്ഥാനപ്പേരും]"
 
     return f"""
-**കേരള സർക്കാർ / GOVERNMENT OF KERALA**
-**ഗതാഗത (എ) വകുപ്പ് / TRANSPORT (A) DEPARTMENT**
+**കേരള സർക്കാർ**
+**ഗതാഗത (എ) വകുപ്പ്**
 
 {date.today().strftime("%d-%m-%Y")}, തിരുവനന്തപുരം / Thiruvananthapuram
 
 ---
-**പ്രേഷകൻ (From),**
+**പ്രേഷകൻ,**
 {sender_designation}.
 
-**സ്വീകർത്താവ് (To),**
+**സ്വീകർത്താവ്,**
 {receiver_content}
 
 ---
 
-**വിഷയം (Subject):-** {rti_subject}
-**സൂചന (Reference):-** {reference_line}
+**വിഷയം:-** {rti_subject}
+**സൂചന:-** {reference_line}
 
 ---
-#### **മറുപടി (Reply Body)**
+#### **മറുപടി**
 
 {FIXED_MALAYALAM_RTI_REPLY_BODY.strip()}
 
@@ -249,7 +249,7 @@ def generate_reply_letter(orig_name, orig_address, rti_date, rti_num, lang):
 {signatory} 
 
 ---
-**പകർപ്പ് (Copy)**
+**പകർപ്പ്:**
 {FIXED_MALAYALAM_FOOTER_INFO.strip()}
 """
 
@@ -261,7 +261,9 @@ with st.sidebar:
     uploaded_file = st.file_uploader("Upload RTI PDF", type="pdf")
     if uploaded_file:
         st.success("PDF Uploaded")
-        process_btn = st.button("🚀 Process Application", type="primary")
+        process_btn = st.button("🚀 Generate", type="primary")
+        st.markdown("---")
+        st.error("**Verify before submission**")
     else:
         st.info("Awaiting File...")
 
@@ -294,16 +296,17 @@ if st.session_state.get('processed'):
     st.divider()
     
     # --- FILENAME CALCULATION ---
-    raw_name = st.session_state.get('meta_name', 'Applicant') 
+    raw_name = st.session_state.get('meta_name', 'Applicant')
+    rti_num = st.session_state.get('meta_num', 'NO-RTI-NUM')
     safe_name = re.sub(r'[^\w\s\-\.]', '', raw_name).strip()
-    display_filename = f"RTI by {safe_name} -KSRTC-reg"
+    display_filename = f"RTI by {safe_name}-{rti_num}-KSRTC-reg"
     download_filename = f"{display_filename}.txt"
     # ----------------------------
 
     c1, c2, c3 = st.columns(3)
     with c1: st.info(f"**Applicant:** {st.session_state.get('meta_name')}")
     with c2: st.info(f"**RTI Number:** {st.session_state.get('meta_num')}")
-    with c3: st.success(f"**File:** {display_filename}") 
+    with c3: st.success(f"**File Name:** {display_filename}") 
 
     tab1, tab2 = st.tabs(["📝 Internal Note (File)", "✉️ Reply Letter (Draft)"])
     
