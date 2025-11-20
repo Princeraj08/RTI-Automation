@@ -1,0 +1,4 @@
+streamlit
+pdfplumber
+# The Google GenAI client is optional, but include it if you intend to use the live API
+google-genai
